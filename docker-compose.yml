@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  db:
+    build: ./pg_db
+    environment:
+      - POSTGRES_DB=${PG_DB}
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASS}
+    container_name: crypt_pg
+  cryptscan:
+    build: ./crypt_scan
+    volumes:
+      - ./crypt_scan:/usr/src/crypt_scan
+    depends_on:
+      - db
+    container_name: crypt_scan
