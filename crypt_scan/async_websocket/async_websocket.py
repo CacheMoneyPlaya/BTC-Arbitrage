@@ -23,7 +23,8 @@ async def initiate_socket(market: str, pool):
             try:
                 response = await asyncio.wait_for(ws.recv(), WAIT_TIMEOUT)
                 raw_msg = json.loads(response)
-                handle(raw_msg)
+                print(raw_msg)
+                handle(raw_msg, 'test')
                 print('%s %s %s %s' % (fg('white'), bg(os.getenv(market + '_C')), raw_msg, attr('reset')))
                 print('\n')
             except:

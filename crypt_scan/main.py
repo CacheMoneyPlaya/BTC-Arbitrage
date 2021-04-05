@@ -4,8 +4,6 @@ from dotenv import load_dotenv
 from async_database import async_pool
 from async_websocket import async_websocket
 
-import sys
-
 load_dotenv()
 markets = [
             os.getenv('BIT'),
