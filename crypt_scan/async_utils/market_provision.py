@@ -1,7 +1,6 @@
 import os
 import json
 import aiohttp
-from pathlib import Path
 import dotenv
 import logging
 
@@ -10,12 +9,12 @@ dotenv.load_dotenv(dotenv_file)
 WAIT_TIMEOUT = 20
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 
-
-def get_bit_provisions(load):
-    return [(str(i), str(d.get('tickSize'))) for i, d in enumerate(load) if d['symbol'] == 'XBTUSD'][0]
-
-
 async def provision_market(market: str):
+    """
+    Provisions the supplied market if required
+    :param market:
+    :return:
+    """
     if market == os.getenv('BIT'):
         try:
             await provision_bit()
@@ -28,14 +27,34 @@ async def provision_market(market: str):
 
 
 async def provision_bit():
+    """
+    Fetches the BIT socket subscription credentials
+    :return:
+    """
     async with aiohttp.ClientSession() as s:
         async with s.get(os.getenv('BIT_PROV')) as r:
             prov = get_bit_provisions(json.loads(await r.text()))
             os.environ["BIT_IDX"], os.environ["BIT_TICKSIZE"] = prov
+
+            #Sets the BIT socket subscription credentials in env
             set_env('BIT_IDX', os.environ["BIT_IDX"])
             set_env('BIT_TICKSIZE', os.environ["BIT_TICKSIZE"])
 
 
+def get_bit_provisions(load):
+    """
+    Filters out the BIT
+    :param load:
+    :return:
+    """
+    return [(str(i), str(d.get('tickSize'))) for i, d in enumerate(load) if d['symbol'] == 'XBTUSD'][0]
+
 
 def set_env(key: str, value: str):
+    """
+    Generic environment provisioner
+    :param key:
+    :param value:
+    :return:
+    """
     dotenv.set_key(dotenv_file, key, value)

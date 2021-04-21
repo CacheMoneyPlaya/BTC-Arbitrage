@@ -5,11 +5,13 @@ from async_database import async_pool
 from async_websocket import async_websocket
 
 load_dotenv()
+
+# Markets can be introduced from here
 markets = [
             os.getenv('BIT'),
             # os.getenv('BFN'),
             # os.getenv('COI'),
-           ]
+]
 
 
 async def entry():
@@ -27,6 +29,12 @@ async def entry():
 
 
 async def initiate(market: str, pool):
+    """
+    Spins up the websocket entry point
+    :param market:
+    :param pool:
+    :return:
+    """
     await async_websocket.initiate_socket(market, pool)
 
 
