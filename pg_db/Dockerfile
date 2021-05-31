@@ -11,4 +11,6 @@ COPY .pgpass ./home
 
 RUN chmod 0600 home/.pgpass
 
-COPY init.sql /docker-entrypoint-initdb.d/
+EXPOSE 5432/tcp
+
+CMD ["/bin/bash"]

@@ -6,6 +6,7 @@ from websockets import connect
 from dotenv import load_dotenv
 from colored import fg, bg, attr
 from async_utils import market_provision, market_handler
+import time
 
 """
 Timeout defined WS
@@ -20,6 +21,7 @@ async def initiate_socket(market: str, pool):
     :param pool:
     :return:
     """
+    count = 0
     # Configure market data handler
     handle = getattr(market_handler, market.lower()+'_handler')
     # Provision the market if required
@@ -27,13 +29,16 @@ async def initiate_socket(market: str, pool):
     # Initiate the market websocket subscription
     async with connect(os.getenv(market+'_WS')) as ws:
         await ws.send(os.getenv(market+'_SUB'))
+        t0 = time.time()
         while True:
             try:
-                response = await asyncio.wait_for(ws.recv(), WAIT_TIMEOUT)
-                raw_msg = json.loads(response)
-                handle(raw_msg, 'test')
+                t1 = time.time()
+                #Simple filter of intial connection messages
+                if t1-t0 > 10:
+                    response = await asyncio.wait_for(ws.recv(), WAIT_TIMEOUT)
+                    raw_msg = json.loads(response)
+                    handle(raw_msg, 'test')
                 # print('%s %s %s %s' % (fg('white'), bg(os.getenv(market + '_C')), raw_msg, attr('reset')))
                 # print('\n')
             except:
                 exit()
-

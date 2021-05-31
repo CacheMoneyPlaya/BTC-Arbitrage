@@ -35,16 +35,8 @@ BITMEX:
 
 BITFINEX:
 
- {[
-    1, Channel
-    'te', Channel Id
-    [
-      642062244, Trade Id
-      1615673602349, Millisecond Timestamp
-      0.12234142, ±Amount
-      60883 $Price
-    ]
-  ]}
+ [256, [36624, 3, 0.64041059]]
+ channelid, price, count, total (±)
 
  The order side can be determined determined with a
  prefixed polarity against the amount
@@ -68,3 +60,9 @@ COINBASE:
   'trade_id': 144598885,
   'last_size': '0.01471539'
  }
+
+
+172.25.40.162
+172.31.46.113
+5432
+postgres
