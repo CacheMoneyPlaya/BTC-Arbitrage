@@ -24,6 +24,10 @@ BITMEX:
  ID = (100000000 * symbolIdx) - (price / instrumentTickSize)
  price = ((100000000 * symbolIdx) - ID) * instrumentTickSize
 
+ {'symbol': 'XBTUSD', 'id': 8796452050, 'side': 'Sell', 'size': 18000, 'price': 35479.5}
+
+ Size is price
+
 
  foreignNotional: USD value of order
  homeNotional: Order size in bitcoin
@@ -38,31 +42,25 @@ BITFINEX:
  [256, [36624, 3, 0.64041059]]
  channelid, price, count, total (±)
 
+ [12170, [36650, 1, -0.0042]]
+
+ total of 1 order for the sale of 0.0042BTC at 36650 USD
+
  The order side can be determined determined with a
  prefixed polarity against the amount
 
 COINBASE:
 
- {
-  'type': 'ticker',
-  'sequence': 22679094330,
-  'product_id': 'BTC-USD',
-  'price': '60979.05',
-  'open_24h': '57180.23',
-  'volume_24h': '21741.25136546',
-  'low_24h': '56083.74',
-  'high_24h': '61788.45',
-  'volume_30d': '727613.57414185',
-  'best_bid': '60979.04',
-  'best_ask': '60979.05',
-  'side': 'buy',
-  'time': '2021-03-13T22:24:56.708861Z',
-  'trade_id': 144598885,
-  'last_size': '0.01471539'
- }
+[side, price, size]
 
 
 172.25.40.162
 172.31.46.113
+172.26.246.156
 5432
 postgres
+
+
+
+STORAGE:
+ASSET|PRICE|QTY|SIDE|EXCHANGE|TIMESTAMP

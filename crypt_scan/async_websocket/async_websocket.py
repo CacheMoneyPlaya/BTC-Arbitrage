@@ -31,14 +31,12 @@ async def initiate_socket(market: str, pool):
         await ws.send(os.getenv(market+'_SUB'))
         t0 = time.time()
         while True:
-            try:
+            # try:
                 t1 = time.time()
                 #Simple filter of intial connection messages
-                if t1-t0 > 10:
-                    response = await asyncio.wait_for(ws.recv(), WAIT_TIMEOUT)
+                response = await asyncio.wait_for(ws.recv(), WAIT_TIMEOUT)
+                if t1-t0 > 5:
                     raw_msg = json.loads(response)
-                    handle(raw_msg, 'test')
-                # print('%s %s %s %s' % (fg('white'), bg(os.getenv(market + '_C')), raw_msg, attr('reset')))
-                # print('\n')
-            except:
-                exit()
+                    handle(raw_msg, 'test', market)
+            # except Exception as e:
+                # print(str(e))

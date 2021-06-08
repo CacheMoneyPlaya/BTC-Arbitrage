@@ -8,8 +8,8 @@ load_dotenv()
 
 # Markets can be introduced from here
 markets = [
-            # os.getenv('BIT'),
-            os.getenv('BFN'),
+            os.getenv('BIT'),
+            # os.getenv('BFN'),
             # os.getenv('COI'),
 ]
 

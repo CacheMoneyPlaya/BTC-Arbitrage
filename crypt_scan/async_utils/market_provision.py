@@ -47,7 +47,9 @@ def get_bit_provisions(load):
     :param load:
     :return:
     """
-    return [(str(i), str(d.get('tickSize'))) for i, d in enumerate(load) if d['symbol'] == 'XBTUSD'][0]
+    # Temporary override as per https://www.bitmex.com/app/wsAPI#OrderBookL2
+    # str(d.get('tickSize'))
+    return [(str(i), '0.01') for i, d in enumerate(load) if d['symbol'] == 'XBTUSD'][0]
 
 
 def set_env(key: str, value: str):
