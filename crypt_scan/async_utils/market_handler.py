@@ -38,8 +38,8 @@ def validate_bfn(func):
     :return:
     """
     def wrap(message, pool, market):
-        print(message)
-        return func(message[1], pool, market)
+        if (len(message[1])) == 3 and message[1][1]:
+            return func(message[1], pool, market)
     return wrap
 
 
@@ -48,27 +48,17 @@ def validate_bfn(func):
 
 @validate_bit
 def bit_handler(message: dict, pool, market: str):
-    # Run Parser
-    # print('%s %s %s %s' % (fg('white'), bg(os.getenv(market + '_C')), message, attr('reset')))
-    # print('\n')
-    # Need to handle multiple
     messages = mp.bit_parser(message, market)
 
 
 @validate_coi
 def coi_handler(message: dict, pool, market: str):
-    # Run Parser
-    # print('%s %s %s %s' % (fg('white'), bg(os.getenv(market + '_C')), message, attr('reset')))
-    # print('\n')
     messages = mp.coi_parser(message, market)
 
 
 @validate_bfn
 def bfn_handler(message: str, pool, market: str):
-    # Run Parser
-    # print('%s %s %s %s' % (fg('white'), bg(os.getenv(market + '_C')), message, attr('reset')))
-    # print('\n')
-    print('.')
+    messages = mp.bfn_parser(message, market)
 
 
 def oder_book_insert():

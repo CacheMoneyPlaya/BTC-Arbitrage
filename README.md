@@ -46,7 +46,7 @@ BITFINEX:
 
  total of 1 order for the sale of 0.0042BTC at 36650 USD
 
- The order side can be determined determined with a
+ The order side can be determined with a
  prefixed polarity against the amount
 
 COINBASE:
