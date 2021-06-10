@@ -1,7 +1,9 @@
-from async_utils import market_parser as mp
-from colored import fg, bg, attr
 import os
-
+from colored import fg, bg, attr
+from exchanges.Bitmex import Bitmex
+from exchanges.Bitfinex import Bitfinex
+from exchanges.Coinbase import Coinbase
+from async_utils import market_parser as mp
 
 def validate_bit(func):
     """
@@ -11,8 +13,9 @@ def validate_bit(func):
     :return:
     """
     def wrap(message, pool, market):
-        if message.get('action') == 'insert':
-            return func(message.get('data'), pool, market)
+        module = Bitmex(message, pool)
+        if module.is_valid():
+            return func(module)
     return wrap
 
 
@@ -24,9 +27,9 @@ def validate_coi(func):
     :return:
     """
     def wrap(message, pool, market):
-        volume = float(message.get('changes')[0][2])
-        if volume != 0.0:
-            return func(*message.get('changes'), pool, market)
+        module = Coinbase(message, pool)
+        if module.is_valid():
+            return func(module)
     return wrap
 
 
@@ -38,30 +41,22 @@ def validate_bfn(func):
     :return:
     """
     def wrap(message, pool, market):
-        if (len(message[1])) == 3 and message[1][1]:
-            return func(message[1], pool, market)
+        module  = Bitfinex(message, pool)
+        if module.is_valid():
+            return func(module)
     return wrap
 
 
-# ASSET|PRICE|QTY|SIDE|EXCHANGE|TIMESTAMP
-
-
 @validate_bit
-def bit_handler(message: dict, pool, market: str):
-    messages = mp.bit_parser(message, market)
+def bit_handler(bit_module: Bitmex):
+    load = bit_module.parse()
 
 
 @validate_coi
-def coi_handler(message: dict, pool, market: str):
-    messages = mp.coi_parser(message, market)
+def coi_handler(coi_module: Coinbase):
+    loads = coi_module.parse()
 
 
 @validate_bfn
-def bfn_handler(message: str, pool, market: str):
-    messages = mp.bfn_parser(message, market)
-
-
-def oder_book_insert():
-    print('test_order_book_insert')
-    # Pass pool client
-    # Call db handler
+def bfn_handler(bfn_module: Bitfinex):
+    load = bfn_module.parse()
