@@ -1,3 +1,6 @@
+
+https://user-images.githubusercontent.com/39480577/121440074-19741680-c97f-11eb-9d36-68a688403a42.mp4
+
 Three main exchange websockets being used at the moment:
 
 BITMEX:
