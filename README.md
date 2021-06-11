@@ -1,7 +1,4 @@
 
-█▀▀ █▀█ █▄█ █▀█ ▀█▀ ▄▄ ▄▀█ █▀█ █▄▄
-█▄▄ █▀▄ ░█░ █▀▀ ░█░ ░░ █▀█ █▀▄ █▄█
-
 A BTCUSD arbitrage bot using Bitfinex, Bitmex and Coinbase (Soon to introduce Binance)
 
 Utilizes asyncio to make heavy use of coroutines in sync with asyncpg
