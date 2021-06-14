@@ -6,11 +6,14 @@ from async_websocket import async_websocket
 
 load_dotenv()
 
+"""
+Generic entry for the beginning scan session
+"""
 # Markets can be introduced from here
 markets = [
-            os.getenv('BIT'),
-            os.getenv('BFN'),
-            os.getenv('COI'),
+    os.getenv('BIT'),
+    os.getenv('BFN'),
+    os.getenv('COI'),
 ]
 
 

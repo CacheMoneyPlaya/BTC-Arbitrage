@@ -5,6 +5,7 @@ from exchanges.Bitfinex import Bitfinex
 from exchanges.Coinbase import Coinbase
 from async_utils import market_parser as mp
 
+
 def validate_bit(func):
     """
     Decorator that filters out incorrect
@@ -41,7 +42,7 @@ def validate_bfn(func):
     :return:
     """
     def wrap(message, pool, market):
-        module  = Bitfinex(message, pool)
+        module = Bitfinex(message, pool)
         if module.is_valid():
             return func(module)
     return wrap

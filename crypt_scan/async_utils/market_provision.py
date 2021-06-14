@@ -9,6 +9,7 @@ dotenv.load_dotenv(dotenv_file)
 WAIT_TIMEOUT = 20
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 
+
 async def provision_market(market: str):
     """
     Provisions the supplied market if required
@@ -19,7 +20,8 @@ async def provision_market(market: str):
         try:
             await provision_bit()
         except:
-            logging.info('Unable to determine BIT provision, defaulting to previous')
+            logging.info(
+                'Unable to determine BIT provision, defaulting to previous')
         else:
             logging.info('BIT Provisioned')
     else:
@@ -36,7 +38,7 @@ async def provision_bit():
             prov = get_bit_provisions(json.loads(await r.text()))
             os.environ["BIT_IDX"], os.environ["BIT_TICKSIZE"] = prov
 
-            #Sets the BIT socket subscription credentials in env
+            # Sets the BIT socket subscription credentials in env
             set_env('BIT_IDX', os.environ["BIT_IDX"])
             set_env('BIT_TICKSIZE', os.environ["BIT_TICKSIZE"])
 

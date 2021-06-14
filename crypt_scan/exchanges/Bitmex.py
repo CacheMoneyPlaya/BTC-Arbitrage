@@ -4,7 +4,29 @@ from dotenv import load_dotenv
 from colored import fg, bg, attr
 from async_utils import market_parser
 
+
 class Bitmex():
+
+        """
+         {
+            'table': 'orderBookL2_25',
+            'action': 'update',
+            'data': [
+                {
+                    'symbol': 'XBTUSD',
+                    'id': 8794132050,
+                    'side': 'Buy',
+                    'size': 260234
+                },
+                {
+                    'symbol': 'XBTUSD',
+                    'id': 8794134150,
+                    'side': 'Buy',
+                    'size': 10000
+                }
+             ]
+         }
+        """
 
     env_path = Path('../') / '.env'
     UPDATE = 'update'

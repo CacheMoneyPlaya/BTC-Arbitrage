@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 env_path = Path('../') / '.env'
 load_dotenv(dotenv_path=env_path)
 
+
 async def get_pool(dsn):
     attempts = 20
     sleep_between_attempts = 3
@@ -28,4 +29,3 @@ async def create_pool():
         port=os.getenv('PG_PORT'),
         database=os.getenv('PG_DATABASE')
     )
-
