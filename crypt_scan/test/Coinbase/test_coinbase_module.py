@@ -1,5 +1,5 @@
 import sys
-# sys.path.append('.')
+sys.path.append('.')
 from exchanges.Coinbase import Coinbase
 import unittest
 
