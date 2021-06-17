@@ -41,8 +41,8 @@ class Coinbase():
             self.EXCHANGE
         )
 
-        print('%s %s %s %s' % (fg('white'), bg(
-            os.getenv(self.EXCHANGE + '_C')), load, attr('reset')))
+        # print('%s %s %s %s' % (fg('white'), bg(
+            # os.getenv(self.EXCHANGE + '_C')), load, attr('reset')))
 
     def get_price(self):
         """

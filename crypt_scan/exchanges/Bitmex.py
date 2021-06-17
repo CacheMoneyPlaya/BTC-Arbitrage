@@ -7,28 +7,28 @@ from async_utils import market_parser
 
 class Bitmex():
 
-        """
-         {
-            'table': 'orderBookL2_25',
-            'action': 'update',
-            'data': [
-                {
-                    'symbol': 'XBTUSD',
-                    'id': 8794132050,
-                    'side': 'Buy',
-                    'size': 260234
-                },
-                {
-                    'symbol': 'XBTUSD',
-                    'id': 8794134150,
-                    'side': 'Buy',
-                    'size': 10000
-                }
-             ]
-         }
-        """
+        # """
+        #  {
+        #     'table': 'orderBookL2_25',
+        #     'action': 'update',
+        #     'data': [
+        #         {
+        #             'symbol': 'XBTUSD',
+        #             'id': 8794132050,
+        #             'side': 'Buy',
+        #             'size': 260234
+        #         },
+        #         {
+        #             'symbol': 'XBTUSD',
+        #             'id': 8794134150,
+        #             'side': 'Buy',
+        #             'size': 10000
+        #         }
+        #      ]
+        #  }
+        # """
 
-    env_path = Path('../') / '.env'
+    env_path = Path('../')/'.env'
     UPDATE = 'update'
     CONST = 1e8
     IDX = float(os.getenv('BIT_IDX'))
@@ -65,7 +65,7 @@ class Bitmex():
                 )
             )
 
-        for l in loads: print('%s %s %s %s' % (fg('white'), bg(os.getenv(self.EXCHANGE + '_C')), l, attr('reset')))
+        # for l in loads: print('%s %s %s %s' % (fg('white'), bg(os.getenv(self.EXCHANGE + '_C')), l, attr('reset')))
 
 
     def get_price(self, order: dict):

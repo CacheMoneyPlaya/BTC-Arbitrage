@@ -15,4 +15,4 @@ pylint:
 unit-test:
   stage: Test
   script:
-  - python3 -m unittest crypt_scan/tests/*_test.py
+  - python3 -m unittest
