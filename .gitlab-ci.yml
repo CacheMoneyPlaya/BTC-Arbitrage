@@ -16,4 +16,4 @@ unit-test:
   stage: Test
   script:
   - cd crypt_scan/
-  - python3 -m unittest
+  - pytest test/
