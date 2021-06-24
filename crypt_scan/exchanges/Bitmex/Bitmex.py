@@ -2,15 +2,14 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from colored import fg, bg, attr
-from async_utils import market_parser
+from exchanges.BaseExchange import BaseExchange
 
-
-class Bitmex():
+class Bitmex(BaseExchange):
 
         # """
         #  {
         #     'table': 'orderBookL2_25',
-        #     'action': 'update',
+        #     'action': 'insert',
         #     'data': [
         #         {
         #             'symbol': 'XBTUSD',
@@ -29,7 +28,7 @@ class Bitmex():
         # """
 
     env_path = Path('../')/'.env'
-    UPDATE = 'update'
+    INSERT = 'insert'
     CONST = 1e8
     IDX = float(os.getenv('BIT_IDX'))
     TICK_SIZE = float(os.getenv('BIT_TICKSIZE'))
@@ -43,21 +42,22 @@ class Bitmex():
         self.pool = pool
 
 
-    def is_valid(self):
-        return self.message.get('action') == self.UPDATE
+    def is_valid(self) -> bool:
+        return self.message.get('action') == self.INSERT
 
 
-    def parse(self):
+    def parse(self) -> None:
         self.isolate_orders()
+        self.loads = []
 
         for order in self.orders:
-            loads = []
+
             price = self.get_price(order)
             quantity = self.get_quantity(order, price)
             side = self.get_side(order)
 
-            loads.append(
-                market_parser.build_load(
+            self.loads.append(
+                self.build_load(
                     price,
                     quantity,
                     side,
@@ -65,10 +65,10 @@ class Bitmex():
                 )
             )
 
-        # for l in loads: print('%s %s %s %s' % (fg('white'), bg(os.getenv(self.EXCHANGE + '_C')), l, attr('reset')))
+        for l in self.loads: print('%s %s %s %s' % (fg('white'), bg(os.getenv(self.EXCHANGE + '_C')), l, attr('reset')))
 
 
-    def get_price(self, order: dict):
+    def get_price(self, order: dict) -> int:
         """
          Reverse engineers the order
          price level
@@ -77,7 +77,7 @@ class Bitmex():
         return ((self.CONST * self.IDX) - order.get('id')) * self.TICK_SIZE
 
 
-    def get_quantity(self, order, price):
+    def get_quantity(self, order, price) -> int:
         """
         Calculates the BITMEX order quantity
         :return int:
@@ -86,12 +86,12 @@ class Bitmex():
 
 
 
-    def get_side(self, order):
+    def get_side(self, order) -> str:
         """
         Determines the BITMEX order side
         :return int:
         """
         return order.get('side')
 
-    def isolate_orders(self):
+    def isolate_orders(self) -> None:
         self.orders = self.message.get('data')

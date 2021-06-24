@@ -1,12 +1,15 @@
 import sys
 sys.path.append('.')
-from exchanges.Coinbase import Coinbase
+from exchanges.Coinbase.Coinbase import Coinbase
 import pytest
 
 class TestCoinbase():
 
     coi_module = None
     coi_msg = None
+
+    BUY = 'buy'
+    SELL = 'sell'
 
 
     @classmethod
@@ -27,11 +30,11 @@ class TestCoinbase():
 
 
     def test_can_get_price(self):
-        assert self.coi_module.get_price() == '40143.01'
+        assert self.coi_module.get_price() == self.coi_msg.get('changes')[0][1]
 
 
     def test_can_get_quantity(self):
-        assert self.coi_module.get_quantity() == '0.26000000'
+        assert self.coi_module.get_quantity() == self.coi_msg.get('changes')[0][2]
 
 
     def test_can_validate(self):
@@ -39,4 +42,8 @@ class TestCoinbase():
 
 
     def test_can_get_side(self):
-        assert self.coi_module.get_side() == 'buy'
+        assert self.coi_module.get_side() == self.BUY
+
+    def test_can_isolate_order(self):
+        self.coi_module.isolate_order()
+        assert self.coi_module.order == self.coi_msg.get('changes')[0]

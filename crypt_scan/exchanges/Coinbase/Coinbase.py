@@ -2,10 +2,10 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from colored import fg, bg, attr
-from async_utils import market_parser
+from exchanges.BaseExchange import BaseExchange
 
 
-class Coinbase():
+class Coinbase(BaseExchange):
 
     """
     MESSAGE STRUCTURE:
@@ -16,9 +16,9 @@ class Coinbase():
      ]
     """
     env_path = Path('../') / '.env'
-    UPDATE = 'update'
     CONST = 1e8
     EXCHANGE = os.getenv('COI')
+    UPDATE = 'update'
     SELL = 'sell'
     BUY = 'buy'
 
@@ -28,42 +28,43 @@ class Coinbase():
         self.message = message
         self.pool = pool
 
-    def is_valid(self):
+    def is_valid(self) -> bool:
         volume = float(self.message.get('changes')[0][2])
         return volume != 0.0
 
-    def parse(self):
+    def parse(self) -> None:
+
         self.isolate_order()
-        load = market_parser.build_load(
+        self.load = self.build_load(
             self.get_price(),
             self.get_quantity(),
             self.get_side(),
             self.EXCHANGE
         )
 
-        # print('%s %s %s %s' % (fg('white'), bg(
-            # os.getenv(self.EXCHANGE + '_C')), load, attr('reset')))
+        print('%s %s %s %s' % (fg('white'), bg(
+            os.getenv(self.EXCHANGE + '_C')), self.load, attr('reset')))
 
-    def get_price(self):
+    def get_price(self) -> int:
         """
          Returns price
         :return int:
         """
         return self.order[1]
 
-    def get_quantity(self):
+    def get_quantity(self) -> int:
         """
         Returns absolute polarity of order volume
         :return int:
         """
         return self.order[2]
 
-    def get_side(self):
+    def get_side(self) -> str:
         """
         Determines the Coinbase order polarity
         :return string:
         """
         return self.order[0]
 
-    def isolate_order(self):
+    def isolate_order(self) -> None:
         self.order = self.message.get('changes')[0]

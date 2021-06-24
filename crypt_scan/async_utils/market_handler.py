@@ -1,8 +1,6 @@
 import os
 from colored import fg, bg, attr
-from exchanges.Bitmex import Bitmex
-from exchanges.Bitfinex import Bitfinex
-from exchanges.Coinbase import Coinbase
+from exchanges.ExchangeFactory import ExchangeFactory
 from async_utils import market_parser as mp
 
 
@@ -14,7 +12,7 @@ def validate_bit(func):
     :return:
     """
     def wrap(message, pool, market):
-        module = Bitmex(message, pool)
+        module = ExchangeFactory.resolve_bitmex(message, pool)
         if module.is_valid():
             return func(module)
     return wrap
@@ -28,7 +26,7 @@ def validate_coi(func):
     :return:
     """
     def wrap(message, pool, market):
-        module = Coinbase(message, pool)
+        module = ExchangeFactory.resolve_coinbase(message, pool)
         if module.is_valid():
             return func(module)
     return wrap
@@ -42,22 +40,22 @@ def validate_bfn(func):
     :return:
     """
     def wrap(message, pool, market):
-        module = Bitfinex(message, pool)
+        module = ExchangeFactory.resolve_bitfinex(message, pool)
         if module.is_valid():
             return func(module)
     return wrap
 
 
 @validate_bit
-def bit_handler(bit_module: Bitmex):
+def bit_handler(bit_module: ExchangeFactory):
     load = bit_module.parse()
 
 
 @validate_coi
-def coi_handler(coi_module: Coinbase):
+def coi_handler(coi_module: ExchangeFactory):
     loads = coi_module.parse()
 
 
 @validate_bfn
-def bfn_handler(bfn_module: Bitfinex):
+def bfn_handler(bfn_module: ExchangeFactory):
     load = bfn_module.parse()
