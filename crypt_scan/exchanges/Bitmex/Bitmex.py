@@ -27,14 +27,13 @@ class Bitmex(BaseExchange):
         #  }
         # """
 
-    env_path = Path('../')/'.env'
-    INSERT = 'insert'
-    CONST = 1e8
     IDX = float(os.getenv('BIT_IDX'))
     TICK_SIZE = float(os.getenv('BIT_TICKSIZE'))
     EXCHANGE = os.getenv('BIT')
+    BIT_PRICE_RATIO = float(os.getenv('BIT_PRICE_RATIO'))
+    COLOR = os.getenv(EXCHANGE + '_C')
 
-    load_dotenv(dotenv_path=env_path)
+    load_dotenv(dotenv_path=BaseExchange.env_path)
 
 
     def __init__(self, message, pool):
@@ -43,7 +42,7 @@ class Bitmex(BaseExchange):
 
 
     def is_valid(self) -> bool:
-        return self.message.get('action') == self.INSERT
+        return self.message.get('action') == BaseExchange.INSERT
 
 
     def parse(self) -> None:
@@ -65,7 +64,7 @@ class Bitmex(BaseExchange):
                 )
             )
 
-        for l in self.loads: print('%s %s %s %s' % (fg('white'), bg(os.getenv(self.EXCHANGE + '_C')), l, attr('reset')))
+        for l in self.loads: print('%s %s %s %s' % (fg('white'), bg(self.BIT_COLOR), l, attr('reset')))
 
 
     def get_price(self, order: dict) -> int:
@@ -74,7 +73,7 @@ class Bitmex(BaseExchange):
          price level
         :return int:
         """
-        return ((self.CONST * self.IDX) - order.get('id')) * self.TICK_SIZE
+        return ((self.BIT_PRICE_RATIO * self.IDX) - order.get('id')) * self.TICK_SIZE
 
 
     def get_quantity(self, order, price) -> int:

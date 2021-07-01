@@ -3,9 +3,10 @@ from pathlib import Path
 from dotenv import load_dotenv
 from colored import fg, bg, attr
 from async_utils import market_parser
+from exchanges.BaseExchange import BaseExchange
 
 
-class Bitfinex():
+class Bitfinex(BaseExchange):
 
     """
     ID|PRICE|ORDER_COUNT|VOLUME
@@ -18,14 +19,10 @@ class Bitfinex():
      ]
     """
 
-    env_path = Path('../') / '.env'
-    UPDATE = 'update'
-    CONST = 1e8
     EXCHANGE = os.getenv('BFN')
-    SELL = 'sell'
-    BUY = 'buy'
+    COLOR = os.getenv(EXCHANGE + '_C')
 
-    load_dotenv(dotenv_path=env_path)
+    load_dotenv(dotenv_path=BaseExchange.env_path)
 
     def __init__(self, message, pool):
         self.message = message
@@ -37,15 +34,14 @@ class Bitfinex():
     def parse(self) -> None:
 
         self.isolate_order()
-        self.load = market_parser.build_load(
+        self.load = self.build_load(
             self.get_price(),
             self.get_quantity(),
             self.get_side(),
             self.EXCHANGE
         )
 
-        print('%s %s %s %s' % (fg('white'), bg(
-            os.getenv(self.EXCHANGE + '_C')), self.load, attr('reset')))
+        print('%s %s %s %s' % (fg('white'), bg(self.COLOR), self.load, attr('reset')))
 
     def get_price(self) -> int:
         """
@@ -66,7 +62,7 @@ class Bitfinex():
         Determines the Bitfinex order polarity
         :return string:
         """
-        return self.SELL if self.order[2] < 0 else self.BUY
+        return BaseExchange.SELL if self.order[2] < 0 else BaseExchange.BUY
 
     def isolate_order(self) -> None:
         self.order = self.message[1]

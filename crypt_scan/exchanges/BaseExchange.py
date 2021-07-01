@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 """
 Parent class that all exchanges can
@@ -6,6 +7,12 @@ inherit from, will increase in size
 over dev time
 """
 class BaseExchange():
+
+    env_path = Path('../') / '.env'
+    SELL = 'sell'
+    BUY = 'buy'
+    UPDATE = 'update'
+    INSERT = 'insert'
 
     def build_load(self, *args) -> dict:
 

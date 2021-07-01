@@ -15,14 +15,10 @@ class Coinbase(BaseExchange):
         size
      ]
     """
-    env_path = Path('../') / '.env'
-    CONST = 1e8
     EXCHANGE = os.getenv('COI')
-    UPDATE = 'update'
-    SELL = 'sell'
-    BUY = 'buy'
+    COLOR = os.getenv(EXCHANGE + '_C')
 
-    load_dotenv(dotenv_path=env_path)
+    load_dotenv(dotenv_path=BaseExchange.env_path)
 
     def __init__(self, message, pool):
         self.message = message
@@ -42,8 +38,7 @@ class Coinbase(BaseExchange):
             self.EXCHANGE
         )
 
-        print('%s %s %s %s' % (fg('white'), bg(
-            os.getenv(self.EXCHANGE + '_C')), self.load, attr('reset')))
+        print('%s %s %s %s' % (fg('white'), bg(self.COLOR), self.load, attr('reset')))
 
     def get_price(self) -> int:
         """
