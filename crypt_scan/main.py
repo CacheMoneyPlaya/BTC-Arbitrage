@@ -12,8 +12,8 @@ Generic entry for the beginning scan session
 
 # Markets can be introduced from here
 markets = [
-    # os.getenv('BIT'),
-    # os.getenv('BFN'),
+    os.getenv('BIT'),
+    os.getenv('BFN'),
     os.getenv('COI'),
 ]
 

@@ -64,7 +64,7 @@ class Bitmex(BaseExchange):
                 )
             )
 
-        for l in self.loads: print('%s %s %s %s' % (fg('white'), bg(self.BIT_COLOR), l, attr('reset')))
+        for l in self.loads: print('%s %s %s %s' % (fg('white'), bg(self.COLOR), l, attr('reset')))
 
 
     def get_price(self, order: dict) -> int:

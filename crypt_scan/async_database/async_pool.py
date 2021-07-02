@@ -27,5 +27,7 @@ async def create_pool():
         password=os.getenv('PG_PASS'),
         host=os.getenv('PG_HOST'),
         port=os.getenv('PG_PORT'),
-        database=os.getenv('PG_DATABASE')
+        database=os.getenv('PG_DATABASE'),
+        command_timeout=60,
+        max_size=100
     )
