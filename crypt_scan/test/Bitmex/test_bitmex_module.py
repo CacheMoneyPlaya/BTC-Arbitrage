@@ -8,8 +8,8 @@ class TestBitmex():
     bit_module = None
     bit_msg = None
 
-    BUY = 'Buy'
-    SELL = 'sell'
+    BUY = 'BUY'
+    SELL = 'SELL'
 
 
     @classmethod

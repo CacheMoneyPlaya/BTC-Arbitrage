@@ -31,3 +31,6 @@ async def create_pool():
         command_timeout=60,
         max_size=100
     )
+
+async def insert_order(connection, order, exchange):
+    await connection.execute('''INSERT INTO price_points(asset, exchange, side, price, size) VALUES($1, $2, $3, $4, $5)''', 'BTC', order.get('exchange'), order.get('side'), order.get('price'), order.get('quantity'))

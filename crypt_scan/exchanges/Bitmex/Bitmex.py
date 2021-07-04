@@ -66,6 +66,8 @@ class Bitmex(BaseExchange):
 
         for l in self.loads: print('%s %s %s %s' % (fg('white'), bg(self.COLOR), l, attr('reset')))
 
+        return self.loads
+
 
     def get_price(self, order: dict) -> int:
         """
@@ -90,7 +92,7 @@ class Bitmex(BaseExchange):
         Determines the BITMEX order side
         :return int:
         """
-        return order.get('side')
+        return order.get('side').upper()
 
     def isolate_orders(self) -> None:
         self.orders = self.message.get('data')

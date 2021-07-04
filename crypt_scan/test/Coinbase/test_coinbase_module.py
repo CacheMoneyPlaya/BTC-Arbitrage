@@ -8,8 +8,8 @@ class TestCoinbase():
     coi_module = None
     coi_msg = None
 
-    BUY = 'buy'
-    SELL = 'sell'
+    BUY = 'BUY'
+    SELL = 'SELL'
 
 
     @classmethod

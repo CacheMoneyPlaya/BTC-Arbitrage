@@ -31,9 +31,10 @@ class Bitfinex(BaseExchange):
     def is_valid(self) -> bool:
         return (len(self.message[1])) == 3 and self.message[1][1]
 
-    def parse(self) -> None:
+    def parse(self) -> dict:
 
         self.isolate_order()
+
         self.load = self.build_load(
             self.get_price(),
             self.get_quantity(),
@@ -42,6 +43,8 @@ class Bitfinex(BaseExchange):
         )
 
         print('%s %s %s %s' % (fg('white'), bg(self.COLOR), self.load, attr('reset')))
+
+        return self.load
 
     def get_price(self) -> int:
         """

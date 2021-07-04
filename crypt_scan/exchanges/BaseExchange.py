@@ -9,8 +9,8 @@ over dev time
 class BaseExchange():
 
     env_path = Path('../') / '.env'
-    SELL = 'sell'
-    BUY = 'buy'
+    SELL = 'SELL'
+    BUY = 'BUY'
     UPDATE = 'update'
     INSERT = 'insert'
 
@@ -25,8 +25,8 @@ class BaseExchange():
         """
         return {
             'asset': 'BTC',
-            'price': args[0],
-            'quantity': args[1],
-            'side': args[2],
             'exchange': args[3],
+            'side': args[2],
+            'price': float(args[0]),
+            'quantity': float(args[1]),
         }

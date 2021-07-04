@@ -40,6 +40,8 @@ class Coinbase(BaseExchange):
 
         print('%s %s %s %s' % (fg('white'), bg(self.COLOR), self.load, attr('reset')))
 
+        return self.load
+
     def get_price(self) -> int:
         """
          Returns price
@@ -59,7 +61,7 @@ class Coinbase(BaseExchange):
         Determines the Coinbase order polarity
         :return string:
         """
-        return self.order[0]
+        return self.order[0].upper()
 
     def isolate_order(self) -> None:
         self.order = self.message.get('changes')[0]
