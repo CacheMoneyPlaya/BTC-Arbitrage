@@ -14,8 +14,6 @@ services:
     volumes:
       - ./pg_db/init.sql:/docker-entrypoint-initdb.d/init.sql
     container_name: crypt_pg
-    # command: "chmod 0600 /home/.pgpass"
-
   crypt_scan:
     build: ./crypt_scan
     volumes:
@@ -23,3 +21,11 @@ services:
     depends_on:
       - crypt_db
     container_name: crypt_scan
+  arbitrage_opp:
+    build: ./arbitrage_opp
+    volumes:
+     - ./arbitrage_opp:/usr/src/arbitrage_opp
+    depends_on:
+     - crypt_db
+     - crypt_scan
+    container_name: arbitrage_opp
