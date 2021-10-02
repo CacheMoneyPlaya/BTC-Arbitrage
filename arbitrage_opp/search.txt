@@ -1,0 +1,7 @@
+Query needs to take all orders from last 5s grouping by order side, we then match between these where sell mkt != buy mkt and where spread between the two prices is greater than the average transaction cost of say 0.5% and make the order for the smallest pairing i.e.
+
+BUY			SELL
+
+0.5BTC - 35K		0.7BTC - 35K
+
+0.1BTC - 34K		0.9BTC - 32K
