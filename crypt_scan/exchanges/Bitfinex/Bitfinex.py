@@ -39,7 +39,8 @@ class Bitfinex(BaseExchange):
             self.get_price(),
             self.get_quantity(),
             self.get_side(),
-            self.EXCHANGE
+            self.EXCHANGE,
+            self.get_order_value()
         )
 
         print('%s %s %s %s' % (fg('white'), bg(self.COLOR), self.load, attr('reset')))
@@ -66,6 +67,14 @@ class Bitfinex(BaseExchange):
         :return string:
         """
         return BaseExchange.SELL if self.order[2] < 0 else BaseExchange.BUY
+
+    def get_order_value(self) -> float:
+        """
+        Determines the Bitmex order value, slims down query
+        :return float:
+        """
+        order_value = round(float(self.order[0]) * abs(float(self.order[2])), 2)
+        return order_value
 
     def isolate_order(self) -> None:
         self.order = self.message[1]

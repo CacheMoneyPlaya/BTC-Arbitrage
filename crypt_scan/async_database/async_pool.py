@@ -34,11 +34,11 @@ async def create_pool():
 
 async def insert_order(connection, order, exchange) -> None:
     await connection.execute(
-        '''INSERT INTO price_points(asset, exchange, side, price, size)
-        VALUES($1, $2, $3, $4, $5)''',
+        '''INSERT INTO {}_side(asset, exchange, price, size, order_value)
+        VALUES($1, $2, $3, $4, $5)'''.format(str(order.get('side')).lower()),
         'BTC',
         order.get('exchange'),
-        order.get('side'),
         order.get('price'),
-        order.get('quantity')
+        order.get('quantity'),
+        order.get('order_value')
     )

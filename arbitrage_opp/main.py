@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from scanner import scanner
+import time
 load_dotenv()
 
 """
@@ -10,7 +11,9 @@ def entry():
     Proxy entry point from main
     :return: void
     """
-    scanner.execute_match_search()
+    while True:
+        scanner.execute_match_search()
+        time.sleep(1)
 
 if __name__ == '__main__':
     entry()

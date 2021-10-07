@@ -54,13 +54,15 @@ class Bitmex(BaseExchange):
             price = self.get_price(order)
             quantity = self.get_quantity(order, price)
             side = self.get_side(order)
+            order_value = self.get_order_value(price, quantity)
 
             self.loads.append(
                 self.build_load(
                     price,
                     quantity,
                     side,
-                    self.EXCHANGE
+                    self.EXCHANGE,
+                    order_value
                 )
             )
 
@@ -93,6 +95,16 @@ class Bitmex(BaseExchange):
         :return int:
         """
         return order.get('side').upper()
+
+
+    def get_order_value(self, price, quantity) -> float:
+        """
+        Determines the Bitmex order value, slims down query
+        :return float:
+        """
+        order_value = round((float(price) * float(quantity)), 2)
+        return order_value
+
 
     def isolate_orders(self) -> None:
         self.orders = self.message.get('data')
