@@ -6,4 +6,3 @@ def execute_match_search():
     # If we have any then post to Twitter via dev account
     print('**************************************')
     qh.execute_session()
-    exit()

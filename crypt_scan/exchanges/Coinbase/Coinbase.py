@@ -35,7 +35,8 @@ class Coinbase(BaseExchange):
             self.get_price(),
             self.get_quantity(),
             self.get_side(),
-            self.EXCHANGE
+            self.EXCHANGE,
+            self.get_order_value(),
         )
 
         print('%s %s %s %s' % (fg('white'), bg(self.COLOR), self.load, attr('reset')))
@@ -62,6 +63,14 @@ class Coinbase(BaseExchange):
         :return string:
         """
         return self.order[0].upper()
+
+    def get_order_value(self) -> float:
+        """
+        Determines the Coinbase order value, slims down query
+        :return float:
+        """
+        order_value = round((float(self.order[2]) * float(self.order[1])), 2)
+        return order_value
 
     def isolate_order(self) -> None:
         self.order = self.message.get('changes')[0]

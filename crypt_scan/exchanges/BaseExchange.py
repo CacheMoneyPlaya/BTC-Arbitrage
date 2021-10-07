@@ -19,7 +19,7 @@ class BaseExchange():
         """
         Stardardised dict format must
         be in order:
-        PRICE|QTY|SIDE|EXCHANGE
+        PRICE|QTY|SIDE|EXCHANGE|ORDER_VALUE
         :param func:
         :return:
         """
@@ -29,4 +29,5 @@ class BaseExchange():
             'side': args[2],
             'price': float(args[0]),
             'quantity': float(args[1]),
+            'order_value': float(args[4])
         }
