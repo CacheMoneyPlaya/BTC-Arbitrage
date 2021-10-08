@@ -10,7 +10,7 @@ stages:
 pylint:
   stage: Static Analysis
   script:
-  - autopep8 --in-place --recursive .
+  - autopep8 --in-place --recursive crypt_scan
 
 unit-test:
   stage: Test
