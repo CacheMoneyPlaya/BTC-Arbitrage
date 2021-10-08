@@ -32,6 +32,7 @@ async def create_pool():
         max_size=100
     )
 
+
 async def insert_order(connection, order, exchange) -> None:
     await connection.execute(
         '''INSERT INTO {}_side(asset, exchange, price, size, order_value)

@@ -19,7 +19,7 @@ async def provision_market(market: str):
     if market == os.getenv('BIT'):
         try:
             await provision_bit()
-        except:
+        except BaseException:
             logging.info(
                 'Unable to determine BIT provision, defaulting to previous')
         else:
@@ -51,7 +51,8 @@ def get_bit_provisions(load):
     """
     # Temporary override as per https://www.bitmex.com/app/wsAPI#OrderBookL2
     # str(d.get('tickSize'))
-    return [(str(i), '0.01') for i, d in enumerate(load) if d['symbol'] == 'XBTUSD'][0]
+    return [(str(i), '0.01')
+            for i, d in enumerate(load) if d['symbol'] == 'XBTUSD'][0]
 
 
 def set_env(key: str, value: str):

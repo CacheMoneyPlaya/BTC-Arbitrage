@@ -43,7 +43,10 @@ class Bitfinex(BaseExchange):
             self.get_order_value()
         )
 
-        print('%s %s %s %s' % (fg('white'), bg(self.COLOR), self.load, attr('reset')))
+        print(
+            '%s %s %s %s' %
+            (fg('white'), bg(
+                self.COLOR), self.load, attr('reset')))
 
         return self.load
 
@@ -73,7 +76,8 @@ class Bitfinex(BaseExchange):
         Determines the Bitmex order value, slims down query
         :return float:
         """
-        order_value = round(float(self.order[0]) * abs(float(self.order[2])), 2)
+        order_value = round(
+            float(self.order[0]) * abs(float(self.order[2])), 2)
         return order_value
 
     def isolate_order(self) -> None:

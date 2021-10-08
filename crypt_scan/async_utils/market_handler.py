@@ -48,7 +48,6 @@ def validate_bfn(func):
     return wrap
 
 
-
 @validate_bit
 async def bit_handler(bit_module: ExchangeFactory, pool):
     loads = bit_module.parse()

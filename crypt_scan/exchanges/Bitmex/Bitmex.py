@@ -4,28 +4,29 @@ from dotenv import load_dotenv
 from colored import fg, bg, attr
 from exchanges.BaseExchange import BaseExchange
 
+
 class Bitmex(BaseExchange):
 
-        # """
-        #  {
-        #     'table': 'orderBookL2_25',
-        #     'action': 'insert',
-        #     'data': [
-        #         {
-        #             'symbol': 'XBTUSD',
-        #             'id': 8794132050,
-        #             'side': 'Buy',
-        #             'size': 260234
-        #         },
-        #         {
-        #             'symbol': 'XBTUSD',
-        #             'id': 8794134150,
-        #             'side': 'Buy',
-        #             'size': 10000
-        #         }
-        #      ]
-        #  }
-        # """
+    # """
+    #  {
+    #     'table': 'orderBookL2_25',
+    #     'action': 'insert',
+    #     'data': [
+    #         {
+    #             'symbol': 'XBTUSD',
+    #             'id': 8794132050,
+    #             'side': 'Buy',
+    #             'size': 260234
+    #         },
+    #         {
+    #             'symbol': 'XBTUSD',
+    #             'id': 8794134150,
+    #             'side': 'Buy',
+    #             'size': 10000
+    #         }
+    #      ]
+    #  }
+    # """
 
     IDX = float(os.getenv('BIT_IDX'))
     TICK_SIZE = float(os.getenv('BIT_TICKSIZE'))
@@ -35,15 +36,12 @@ class Bitmex(BaseExchange):
 
     load_dotenv(dotenv_path=BaseExchange.env_path)
 
-
     def __init__(self, message, pool):
         self.message = message
         self.pool = pool
 
-
     def is_valid(self) -> bool:
         return self.message.get('action') == BaseExchange.INSERT
-
 
     def parse(self) -> None:
         self.isolate_orders()
@@ -66,10 +64,13 @@ class Bitmex(BaseExchange):
                 )
             )
 
-        for l in self.loads: print('%s %s %s %s' % (fg('white'), bg(self.COLOR), l, attr('reset')))
+        for l in self.loads:
+            print(
+                '%s %s %s %s' %
+                (fg('white'), bg(
+                    self.COLOR), l, attr('reset')))
 
         return self.loads
-
 
     def get_price(self, order: dict) -> int:
         """
@@ -77,17 +78,15 @@ class Bitmex(BaseExchange):
          price level
         :return int:
         """
-        return ((self.BIT_PRICE_RATIO * self.IDX) - order.get('id')) * self.TICK_SIZE
-
+        return ((self.BIT_PRICE_RATIO * self.IDX) -
+                order.get('id')) * self.TICK_SIZE
 
     def get_quantity(self, order, price) -> int:
         """
         Calculates the BITMEX order quantity
         :return int:
         """
-        return round(order.get('size')/price, 5)
-
-
+        return round(order.get('size') / price, 5)
 
     def get_side(self, order) -> str:
         """
@@ -96,7 +95,6 @@ class Bitmex(BaseExchange):
         """
         return order.get('side').upper()
 
-
     def get_order_value(self, price, quantity) -> float:
         """
         Determines the Bitmex order value, slims down query
@@ -104,7 +102,6 @@ class Bitmex(BaseExchange):
         """
         order_value = round((float(price) * float(quantity)), 2)
         return order_value
-
 
     def isolate_orders(self) -> None:
         self.orders = self.message.get('data')

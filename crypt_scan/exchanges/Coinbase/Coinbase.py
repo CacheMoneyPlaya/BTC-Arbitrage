@@ -39,7 +39,10 @@ class Coinbase(BaseExchange):
             self.get_order_value(),
         )
 
-        print('%s %s %s %s' % (fg('white'), bg(self.COLOR), self.load, attr('reset')))
+        print(
+            '%s %s %s %s' %
+            (fg('white'), bg(
+                self.COLOR), self.load, attr('reset')))
 
         return self.load
 

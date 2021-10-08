@@ -6,6 +6,8 @@ Parent class that all exchanges can
 inherit from, will increase in size
 over dev time
 """
+
+
 class BaseExchange():
 
     env_path = Path('../') / '.env'
@@ -15,7 +17,6 @@ class BaseExchange():
     INSERT = 'insert'
 
     def build_load(self, *args) -> dict:
-
         """
         Stardardised dict format must
         be in order:
