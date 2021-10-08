@@ -2,18 +2,21 @@ image: "python:latest"
 
 before_script:
   - python --version
-  - pip install -r crypt_scan/requirements.txt
-stages:
-  - Static Analysis
-  - Test
-
-pylint:
-  stage: Static Analysis
-  script:
-  - autopep8 --in-place --recursive crypt_scan
-
-unit-test:
-  stage: Test
-  script:
   - cd crypt_scan/
-  - pytest test/
+  - virtualenv venv
+  - source venv/bin/activate
+  - pip install -r requirements.txt
+# stages:
+#   - Static Analysis
+#   - Test
+#
+# pylint:
+#   stage: Static Analysis
+#   script:
+#   - autopep8 --in-place --aggressive --aggressive --recursive .
+#
+# unit-test:
+#   stage: Test
+#   script:
+#   - cd crypt_scan/
+#   - pytest test/
