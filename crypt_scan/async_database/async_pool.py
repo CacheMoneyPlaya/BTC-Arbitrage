@@ -9,15 +9,15 @@ env_path = Path('../') / '.env'
 load_dotenv(dotenv_path=env_path)
 
 
-async def get_pool(dsn):
-    attempts = 20
-    sleep_between_attempts = 3
-    for _ in range(attempts):
-        try:
-            pool = asyncio.run(create_pool())
-        except Exception as e:
-            time.sleep(sleep_between_attempts)
-    return pool
+# async def get_pool(dsn):
+#     attempts = 20
+#     sleep_between_attempts = 3
+#     for _ in range(attempts):
+#         try:
+#             pool = asyncio.run(create_pool())
+#         except Exception as e:
+#             time.sleep(sleep_between_attempts)
+#     return pool
 
 
 async def create_pool():

@@ -1,7 +1,8 @@
 import os
 import asyncio
 from dotenv import load_dotenv
-from async_database import async_pool
+from async_database import async_pool as apd
+from async_redis import async_pool as arp
 from async_websocket import async_websocket
 
 load_dotenv()
@@ -12,9 +13,9 @@ Generic entry for the beginning scan session
 
 # Markets can be introduced from here
 markets = [
-    os.getenv('BIT'),
+    # os.getenv('BIT'),
     os.getenv('BFN'),
-    os.getenv('COI'),
+    # os.getenv('COI'),
 ]
 
 
@@ -25,7 +26,10 @@ async def entry():
     :return: void
     """
     # Create connection pool
-    pool = await async_pool.create_pool()
+    # pool = await async_pool.create_pool()
+
+    pool = await arp.create_pool()
+
     # Dynamically gather each configured market
     await asyncio.gather(
         *[initiate(x, pool) for x in markets]
